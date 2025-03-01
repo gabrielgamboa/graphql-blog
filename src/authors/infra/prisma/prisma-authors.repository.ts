@@ -13,33 +13,33 @@ import { ResourceNotFoundError } from '@/shared/errors/resource-not-found';
 export class PrismaAuthorsRepository implements AuthorsRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateAuthor): Promise<Author> {
+  create(data: CreateAuthor): Promise<Author> {
     throw new Error('Method not implemented.');
   }
 
-  async findById(id: string): Promise<Author> {
+  findById(id: string): Promise<Author> {
     return this.get(id);
   }
 
-  async findByEmail(email: string): Promise<Author> {
+  findByEmail(email: string): Promise<Author> {
     throw new Error('Method not implemented.');
   }
 
-  async update(data: Author): Promise<Author> {
+  update(data: Author): Promise<Author> {
     throw new Error('Method not implemented.');
   }
 
-  async delete(id: string): Promise<void> {
+  delete(id: string): Promise<void> {
     throw new Error('Method not implemented.');
   }
 
-  async search(
+  search(
     data: SearchParams<Author, 'name' | 'email' | 'createdAt'>,
   ): Promise<SearchResult<Author>> {
     throw new Error('Method not implemented.');
   }
 
-  private async get(id: string): Promise<Author> {
+  async get(id: string): Promise<Author> {
     const author = await this.prisma.author.findUnique({
       where: { id },
     });

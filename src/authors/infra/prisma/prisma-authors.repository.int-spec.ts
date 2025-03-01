@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaClient } from '@prisma/client';
-import { execSync } from 'child_process';
+import { execSync } from 'node:child_process';
 import { PrismaAuthorsRepository } from './prisma-authors.repository';
 import { PrismaService } from '@/database/prisma/prisma.service';
 
@@ -11,6 +10,7 @@ describe('PrismaAuthorsRepository Integration Tests', () => {
 
   beforeAll(async () => {
     execSync('npm run prisma:migratetest');
+    await prisma.$connect();
     module = await Test.createTestingModule({}).compile();
     repository = new PrismaAuthorsRepository(prisma);
   });
@@ -21,5 +21,9 @@ describe('PrismaAuthorsRepository Integration Tests', () => {
 
   afterAll(async () => {
     await module.close();
+  });
+
+  it('should throws an error when id is not found', async () => {
+    // await expect(())
   });
 });
