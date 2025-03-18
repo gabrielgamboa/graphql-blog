@@ -24,6 +24,22 @@ describe('PrismaAuthorsRepository Integration Tests', () => {
   });
 
   it('should throws an error when id is not found', async () => {
-    // await expect(())
+    await expect(repository.findById('random-uuid')).rejects.toThrow();
+  });
+
+  it('should get an user by id', async () => {
+    const data = {
+      email: 'johndoe@gmail.com',
+      name: 'John',
+    };
+
+    const userCreated = await prisma.author.create({
+      data,
+    });
+
+    const response = await repository.findById(userCreated.id);
+
+    expect(response.id).toBeDefined();
+    expect(response.id).toBe(userCreated.id);
   });
 });
