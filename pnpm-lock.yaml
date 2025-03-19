@@ -51,6 +51,9 @@ importers:
       '@eslint/js':
         specifier: ^9.18.0
         version: 9.20.0
+      '@faker-js/faker':
+        specifier: ^9.6.0
+        version: 9.6.0
       '@nestjs/cli':
         specifier: ^11.0.0
         version: 11.0.3(@swc/cli@0.6.0(@swc/core@1.10.16)(chokidar@4.0.3))(@swc/core@1.10.16)(@types/node@22.13.4)
@@ -460,6 +463,10 @@ packages:
   '@eslint/plugin-kit@0.2.5':
     resolution: {integrity: sha512-lB05FkqEdUg2AA0xEbUz0SnkXT1LcCTa438W4IWTUh4hdOnVbQyOJ81OrDXsJk/LSiJHubgGEFoR5EHq1NsH1A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@faker-js/faker@9.6.0':
+    resolution: {integrity: sha512-3vm4by+B5lvsFPSyep3ELWmZfE3kicDtmemVpuwl1yH7tqtnHdsA6hG8fbXedMVdkzgtvzWoRgjSB4Q+FHnZiw==}
+    engines: {node: '>=18.0.0', npm: '>=9.0.0'}
 
   '@graphql-tools/merge@8.4.2':
     resolution: {integrity: sha512-XbrHAaj8yDuINph+sAfuq3QCZ/tKblrTLOpirK0+CAgNlZUCHs0Fa+xtMUURgwCVThLle1AF7svJCxFizygLsw==}
@@ -4298,6 +4305,8 @@ snapshots:
     dependencies:
       '@eslint/core': 0.10.0
       levn: 0.4.1
+
+  '@faker-js/faker@9.6.0': {}
 
   '@graphql-tools/merge@8.4.2(graphql@16.10.0)':
     dependencies:

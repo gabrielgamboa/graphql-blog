@@ -13,8 +13,9 @@ import { ResourceNotFoundError } from '@/shared/errors/resource-not-found';
 export class PrismaAuthorsRepository implements AuthorsRepository {
   constructor(private prisma: PrismaService) {}
 
-  create(data: CreateAuthor): Promise<Author> {
-    throw new Error('Method not implemented.');
+  async create(data: CreateAuthor): Promise<Author> {
+    const author = await this.prisma.author.create({ data });
+    return author;
   }
 
   findById(id: string): Promise<Author> {
@@ -33,10 +34,54 @@ export class PrismaAuthorsRepository implements AuthorsRepository {
     throw new Error('Method not implemented.');
   }
 
-  search(
-    data: SearchParams<Author, 'name' | 'email' | 'createdAt'>,
+  async search(
+    data: SearchParams<Author, 'name' | 'email' | 'createdAt'> = {},
   ): Promise<SearchResult<Author>> {
-    throw new Error('Method not implemented.');
+    const { page = 1, perPage = 15, filter, sort, sortBy } = data;
+
+    const orderByField = sortBy ?? 'createdAt';
+    const sortDirection = sort ?? 'desc';
+
+    const authorsCount = await this.prisma.author.count({
+      ...(filter && {
+        where: {
+          OR: [
+            {
+              name: { contains: filter },
+            },
+            {
+              email: { contains: filter },
+            },
+          ],
+        },
+      }),
+    });
+
+    const authors = await this.prisma.author.findMany({
+      ...(filter && {
+        where: {
+          OR: [
+            {
+              name: { contains: filter },
+            },
+            {
+              email: { contains: filter },
+            },
+          ],
+        },
+      }),
+      orderBy: { [orderByField]: sortDirection },
+      skip: page > 0 ? (page - 1) * perPage : 1,
+      take: perPage > 0 ? perPage : 15,
+    });
+
+    return {
+      items: authors,
+      total: authorsCount,
+      currentPage: page,
+      lastPage: Math.ceil(authorsCount / perPage),
+      perPage,
+    };
   }
 
   async get(id: string): Promise<Author> {
