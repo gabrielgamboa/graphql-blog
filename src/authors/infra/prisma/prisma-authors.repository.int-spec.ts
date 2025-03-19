@@ -84,7 +84,7 @@ describe('PrismaAuthorsRepository Integration Tests', () => {
       });
     });
 
-    it('should only apply pagination and order', async () => {
+    it('should only apply pagination and ordering', async () => {
       const createdAt = new Date();
       const data: Prisma.AuthorCreateInput[] = [];
       const arrange = 'bacd';
@@ -107,9 +107,39 @@ describe('PrismaAuthorsRepository Integration Tests', () => {
         sort: 'asc',
       });
 
+      expect(response.total).toBe(4);
+      expect(response.items.length).toBe(2);
+      expect(response.items[0]).toMatchObject(data[1]);
+      expect(response.items[1]).toMatchObject(data[0]);
+    });
+
+    it('should apply filter, pagination and ordering', async () => {
+      const createdAt = new Date();
+      const data: Prisma.AuthorCreateInput[] = [];
+      const arrange = ['Test', 'test', 'a', 'b', 'TEST'];
+      arrange.forEach((name, index) => {
+        const currentTimestamp = createdAt.getTime() + index;
+
+        data.push({
+          name,
+          email: `email${index}@gmail.com`,
+          createdAt: new Date(currentTimestamp),
+        } as Prisma.AuthorCreateInput);
+      });
+
+      await prisma.author.createMany({ data });
+
+      const response = await repository.search({
+        page: 1,
+        perPage: 2,
+        sortBy: 'name',
+        sort: 'asc',
+        filter: 'TEST',
+      });
+
       console.log(response);
 
-      expect(response.total).toBe(4);
+      expect(response.total).toBe(3);
       expect(response.items.length).toBe(2);
       expect(response.items[0]).toMatchObject(data[1]);
       expect(response.items[1]).toMatchObject(data[0]);
