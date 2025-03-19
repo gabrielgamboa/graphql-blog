@@ -47,10 +47,10 @@ export class PrismaAuthorsRepository implements AuthorsRepository {
         where: {
           OR: [
             {
-              name: { contains: filter },
+              name: { contains: filter, mode: 'insensitive' },
             },
             {
-              email: { contains: filter },
+              email: { contains: filter, mode: 'insensitive' },
             },
           ],
         },
