@@ -22,8 +22,10 @@ export class PrismaAuthorsRepository implements AuthorsRepository {
     return this.get(id);
   }
 
-  findByEmail(email: string): Promise<Author> {
-    throw new Error('Method not implemented.');
+  async findByEmail(email: string): Promise<Author> {
+    const author = await this.prisma.author.findUnique({ where: { email } });
+    if (author === null) throw new ResourceNotFoundError();
+    return author;
   }
 
   async update(id: string, data: Partial<Author>): Promise<Author> {

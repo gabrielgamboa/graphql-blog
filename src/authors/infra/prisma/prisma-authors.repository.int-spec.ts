@@ -180,27 +180,44 @@ describe('PrismaAuthorsRepository Integration Tests', () => {
 
       expect(response.email).toBe(newEmail);
     });
+  });
 
-    describe('delete', () => {
-      it('should not delete author if id is not found', async () => {
-        const author = AuthorDataBuilder();
-        await prisma.author.create({ data: author });
+  describe('delete', () => {
+    it('should not delete author if id is not found', async () => {
+      const author = AuthorDataBuilder();
+      await prisma.author.create({ data: author });
 
-        await expect(
-          repository.update('uuid-not-founded', {
-            email: 'john.doe@example.com',
-          }),
-        ).rejects.toThrow(new ResourceNotFoundError());
+      await expect(
+        repository.update('uuid-not-founded', {
+          email: 'john.doe@example.com',
+        }),
+      ).rejects.toThrow(new ResourceNotFoundError());
+    });
+
+    it('should delete user', async () => {
+      const author = AuthorDataBuilder();
+      const authorCreated = await prisma.author.create({ data: author });
+
+      const response = await repository.delete(authorCreated.id);
+
+      expect(response).toMatchObject(authorCreated);
+    });
+  });
+
+  describe('findByEmail', () => {
+    it('should throws if email is not found', async () => {
+      await expect(
+        repository.findByEmail('example@gmail.com'),
+      ).rejects.toBeInstanceOf(ResourceNotFoundError);
+    });
+
+    it('should get author if email exists', async () => {
+      const author = await prisma.author.create({
+        data: AuthorDataBuilder({ email: 'existing-email@gmail.com' }),
       });
-
-      it('should delete user', async () => {
-        const author = AuthorDataBuilder();
-        const authorCreated = await prisma.author.create({ data: author });
-
-        const response = await repository.delete(authorCreated.id);
-
-        expect(response).toMatchObject(authorCreated);
-      });
+      const response = await repository.findByEmail('existing-email@gmail.com');
+      expect(response.email).toBe(author.email);
+      expect(response).toMatchObject(author);
     });
   });
 });
