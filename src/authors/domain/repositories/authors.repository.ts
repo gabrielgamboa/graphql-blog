@@ -22,7 +22,7 @@ export interface AuthorsRepository {
   findById(id: string): Promise<Author>;
   findByEmail(email: string): Promise<Author>;
   update(id: string, data: Partial<Author>): Promise<Author>;
-  delete(id: string): Promise<void>;
+  delete(id: string): Promise<Author>;
   search(
     data: SearchParams<Author, 'name' | 'email' | 'createdAt'>,
   ): Promise<SearchResult<Author>>;
