@@ -4,6 +4,7 @@ import { PrismaAuthorsRepository } from './prisma-authors.repository';
 import { PrismaService } from '@/database/prisma/prisma.service';
 import { AuthorDataBuilder } from '@/authors/helper/author-data-builder';
 import { Prisma } from '@prisma/client';
+import { ResourceNotFoundError } from '@/shared/errors/resource-not-found';
 
 describe('PrismaAuthorsRepository Integration Tests', () => {
   let module: TestingModule;
@@ -153,6 +154,31 @@ describe('PrismaAuthorsRepository Integration Tests', () => {
       expect(response2.total).toBe(3);
       expect(response2.items.length).toBe(1);
       expect(response2.items[0]).toMatchObject(data[4]);
+    });
+  });
+
+  describe('update', () => {
+    it('should not update if id is not found', async () => {
+      const author = AuthorDataBuilder();
+      await prisma.author.create({ data: author });
+
+      await expect(
+        repository.update('uuid-not-founded', {
+          email: 'john.doe@example.com',
+        }),
+      ).rejects.toThrow(new ResourceNotFoundError());
+    });
+
+    it('should update user with data values passed to method', async () => {
+      const author = AuthorDataBuilder();
+      const authorCreated = await prisma.author.create({ data: author });
+
+      const newEmail = 'john.doe@example.com';
+      const response = await repository.update(authorCreated.id, {
+        email: newEmail,
+      });
+
+      expect(response.email).toBe(newEmail);
     });
   });
 });

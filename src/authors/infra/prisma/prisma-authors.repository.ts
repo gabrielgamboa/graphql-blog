@@ -26,8 +26,14 @@ export class PrismaAuthorsRepository implements AuthorsRepository {
     throw new Error('Method not implemented.');
   }
 
-  update(data: Author): Promise<Author> {
-    throw new Error('Method not implemented.');
+  async update(id: string, data: Partial<Author>): Promise<Author> {
+    await this.get(id);
+    const updatedAuthor = await this.prisma.author.update({
+      where: { id },
+      data, //SET
+    });
+
+    return updatedAuthor;
   }
 
   delete(id: string): Promise<void> {
