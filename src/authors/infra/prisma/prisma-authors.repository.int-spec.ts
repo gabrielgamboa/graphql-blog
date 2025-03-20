@@ -137,12 +137,22 @@ describe('PrismaAuthorsRepository Integration Tests', () => {
         filter: 'TEST',
       });
 
-      console.log(response);
-
       expect(response.total).toBe(3);
       expect(response.items.length).toBe(2);
       expect(response.items[0]).toMatchObject(data[1]);
       expect(response.items[1]).toMatchObject(data[0]);
+
+      const response2 = await repository.search({
+        page: 2,
+        perPage: 2,
+        sortBy: 'name',
+        sort: 'asc',
+        filter: 'TEST',
+      });
+
+      expect(response2.total).toBe(3);
+      expect(response2.items.length).toBe(1);
+      expect(response2.items[0]).toMatchObject(data[4]);
     });
   });
 });
