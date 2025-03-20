@@ -20,7 +20,7 @@ export type SearchResult<T> = {
 export interface AuthorsRepository {
   create(data: CreateAuthor): Promise<Author>;
   findById(id: string): Promise<Author>;
-  findByEmail(email: string): Promise<Author>;
+  findByEmail(email: string): Promise<Author | null>;
   update(id: string, data: Partial<Author>): Promise<Author>;
   delete(id: string): Promise<Author>;
   search(

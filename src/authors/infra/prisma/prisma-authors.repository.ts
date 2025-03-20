@@ -22,9 +22,8 @@ export class PrismaAuthorsRepository implements AuthorsRepository {
     return this.get(id);
   }
 
-  async findByEmail(email: string): Promise<Author> {
+  async findByEmail(email: string): Promise<Author | null> {
     const author = await this.prisma.author.findUnique({ where: { email } });
-    if (author === null) throw new ResourceNotFoundError();
     return author;
   }
 

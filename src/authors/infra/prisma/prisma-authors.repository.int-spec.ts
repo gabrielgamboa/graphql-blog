@@ -205,10 +205,11 @@ describe('PrismaAuthorsRepository Integration Tests', () => {
   });
 
   describe('findByEmail', () => {
-    it('should throws if email is not found', async () => {
-      await expect(
-        repository.findByEmail('example@gmail.com'),
-      ).rejects.toBeInstanceOf(ResourceNotFoundError);
+    it('should return null if email is not found', async () => {
+      const response = await repository.findByEmail(
+        'non-existing-email@gmail.com',
+      );
+      expect(response).toBeNull();
     });
 
     it('should get author if email exists', async () => {
@@ -216,7 +217,7 @@ describe('PrismaAuthorsRepository Integration Tests', () => {
         data: AuthorDataBuilder({ email: 'existing-email@gmail.com' }),
       });
       const response = await repository.findByEmail('existing-email@gmail.com');
-      expect(response.email).toBe(author.email);
+      expect(response?.email).toBe(author.email);
       expect(response).toMatchObject(author);
     });
   });
