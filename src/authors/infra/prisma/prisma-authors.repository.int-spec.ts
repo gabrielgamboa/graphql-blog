@@ -4,7 +4,7 @@ import { PrismaAuthorsRepository } from './prisma-authors.repository';
 import { PrismaService } from '@/database/prisma/prisma.service';
 import { AuthorDataBuilder } from '@/authors/helper/author-data-builder';
 import { Prisma } from '@prisma/client';
-import { ResourceNotFoundError } from '@/shared/errors/resource-not-found';
+import { ResourceNotFoundError } from '@/shared/errors/resource-not-found-error';
 
 describe('PrismaAuthorsRepository Integration Tests', () => {
   let module: TestingModule;

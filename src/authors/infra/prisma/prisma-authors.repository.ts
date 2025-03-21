@@ -7,7 +7,7 @@ import {
 import { CreateAuthor } from '../../domain/repositories/dtos/create-author';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/database/prisma/prisma.service';
-import { ResourceNotFoundError } from '@/shared/errors/resource-not-found';
+import { ResourceNotFoundError } from '@/shared/errors/resource-not-found-error';
 
 @Injectable()
 export class PrismaAuthorsRepository implements AuthorsRepository {
