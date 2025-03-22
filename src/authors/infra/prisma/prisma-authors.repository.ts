@@ -1,13 +1,11 @@
 import { Author } from '@/authors/infra/graphql/models/author';
-import {
-  AuthorsRepository,
-  SearchParams,
-  SearchResult,
-} from '../../domain/repositories/authors.repository';
+import { AuthorsRepository } from '../../domain/repositories/authors.repository';
 import { CreateAuthor } from '../../domain/repositories/dtos/create-author';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/database/prisma/prisma.service';
 import { ResourceNotFoundError } from '@/shared/errors/resource-not-found-error';
+import { SearchParamsInput } from '@/shared/dtos/search-params';
+import { PaginationResult } from '@/shared/dtos/pagination-result';
 
 @Injectable()
 export class PrismaAuthorsRepository implements AuthorsRepository {
@@ -44,8 +42,8 @@ export class PrismaAuthorsRepository implements AuthorsRepository {
   }
 
   async search(
-    data: SearchParams<Author, 'name' | 'email' | 'createdAt'> = {},
-  ): Promise<SearchResult<Author>> {
+    data: SearchParamsInput<Author, 'name' | 'email' | 'createdAt'> = {},
+  ): Promise<PaginationResult<Author>> {
     const { page = 1, perPage = 15, filter, sort, sortBy } = data;
 
     const orderByField = sortBy ?? 'createdAt';

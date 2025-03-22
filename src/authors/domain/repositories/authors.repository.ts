@@ -1,21 +1,7 @@
+import { SearchParamsInput } from '@/shared/dtos/search-params';
 import { Author } from '../../infra/graphql/models/author';
 import { CreateAuthor } from './dtos/create-author';
-
-export type SearchParams<T, K extends keyof T> = {
-  page?: number;
-  perPage?: number;
-  filter?: string;
-  sortBy?: K;
-  sort?: 'asc' | 'desc';
-};
-
-export type SearchResult<T> = {
-  items: T[];
-  currentPage: number;
-  perPage: number;
-  lastPage: number;
-  total: number;
-};
+import { PaginationResult } from '@/shared/dtos/pagination-result';
 
 export interface AuthorsRepository {
   create(data: CreateAuthor): Promise<Author>;
@@ -24,7 +10,7 @@ export interface AuthorsRepository {
   update(id: string, data: Partial<Author>): Promise<Author>;
   delete(id: string): Promise<Author>;
   search(
-    data: SearchParams<Author, 'name' | 'email' | 'createdAt'>,
-  ): Promise<SearchResult<Author>>;
+    data: SearchParamsInput<Author, 'name' | 'email' | 'createdAt'>,
+  ): Promise<PaginationResult<Author>>;
   get(id: string): Promise<Author>;
 }

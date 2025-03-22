@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { AuthorsRepository } from '../repositories/authors.repository';
 import { BadRequestError } from '@/shared/errors/bad-request-error';
 import { ResourceAlreadyExistsError } from '@/shared/errors/resource-already-exists-error';
+import { AuthorOutput } from '../dtos/author-output';
 
 export namespace CreateAuthorUseCase {
   export type Input = {
@@ -9,12 +10,7 @@ export namespace CreateAuthorUseCase {
     email: string;
   };
 
-  export type Output = {
-    id: string;
-    name: string;
-    email: string;
-    createdAt: Date;
-  };
+  export type Output = AuthorOutput;
 
   export class UseCase {
     constructor(
