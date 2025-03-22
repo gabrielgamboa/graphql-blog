@@ -24,15 +24,11 @@ export namespace CreateAuthorUseCase {
 
     async execute(data: Input): Promise<Output> {
       const { email, name } = data;
-
       if (!email || !name) throw new BadRequestError('Input data not provided');
-
       const emailExists = await this.authorsRepository.findByEmail(email);
       if (emailExists)
         throw new ResourceAlreadyExistsError('Email used by other author');
-
       const author = await this.authorsRepository.create({ email, name });
-
       return author;
     }
   }
