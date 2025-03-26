@@ -1,13 +1,16 @@
-import { PrismaService } from '@/database/prisma/prisma.service';
-import { Query, Resolver } from '@nestjs/graphql';
-import { Author } from '../models/author';
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Author, SearchAuthorsResult } from '../models';
+import { ListAuthorsUsecase } from '@/authors/domain/usecases/list-authors-usecase';
+import { SearchParamsArgs } from '../args/search-params.args';
 
 @Resolver(() => Author)
 export class AuthorsResolver {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private readonly listAuthorsUseCase: ListAuthorsUsecase.Usecase,
+  ) {}
 
-  @Query(() => [Author])
-  authors() {
-    return this.prismaService.author.findMany();
+  @Query(() => SearchAuthorsResult)
+  authors(@Args() args: SearchParamsArgs) {
+    return this.listAuthorsUseCase.execute(args); //resolver isso
   }
 }
