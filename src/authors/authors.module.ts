@@ -7,6 +7,7 @@ import { GetAuthorUseCase } from './domain/usecases/get-author-usecase';
 import { UpdateAuthorUseCase } from './domain/usecases/update-author-usecase';
 import { DeleteAuthorUseCase } from './domain/usecases/delete-author-usecase';
 import { ProviderTokens } from '@/shared/tokens';
+import { CreateAuthorUseCase } from './domain/usecases/create-author-usecase';
 
 @Module({
   imports: [DatabaseModule],
@@ -16,6 +17,7 @@ import { ProviderTokens } from '@/shared/tokens';
     GetAuthorUseCase.UseCase,
     UpdateAuthorUseCase.UseCase,
     DeleteAuthorUseCase.UseCase,
+    CreateAuthorUseCase.UseCase,
     {
       provide: ProviderTokens.AuthorsRepository,
       useClass: PrismaAuthorsRepository,
