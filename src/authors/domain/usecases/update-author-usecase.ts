@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { AuthorOutput } from '../dtos/author-output';
 import { AuthorsRepository } from '../repositories/authors.repository';
 import { Author } from '@/authors/infra/graphql/models/author';
@@ -10,6 +10,7 @@ export namespace UpdateAuthorUseCase {
 
   export type Output = AuthorOutput;
 
+  @Injectable()
   export class UseCase {
     constructor(
       @Inject('AuthorsRepository')

@@ -11,6 +11,6 @@ export class AuthorsResolver {
 
   @Query(() => SearchAuthorsResult)
   authors(@Args() args: SearchParamsArgs) {
-    return this.listAuthorsUseCase.execute(args); //resolver isso
+    return this.listAuthorsUseCase.execute(args);
   }
 }

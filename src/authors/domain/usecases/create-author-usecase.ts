@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { AuthorsRepository } from '../repositories/authors.repository';
 import { BadRequestError } from '@/shared/errors/bad-request-error';
 import { ResourceAlreadyExistsError } from '@/shared/errors/resource-already-exists-error';
@@ -12,6 +12,7 @@ export namespace CreateAuthorUseCase {
 
   export type Output = AuthorOutput;
 
+  @Injectable()
   export class UseCase {
     constructor(
       @Inject('AuthorsRepository')

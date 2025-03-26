@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { AuthorOutput } from '../dtos/author-output';
 import { AuthorsRepository } from '../repositories/authors.repository';
 
@@ -9,6 +9,7 @@ export namespace DeleteAuthorUseCase {
 
   export type Output = AuthorOutput;
 
+  @Injectable()
   export class UseCase {
     constructor(
       @Inject('AuthorsRepository')
