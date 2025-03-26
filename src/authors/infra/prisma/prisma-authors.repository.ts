@@ -42,7 +42,7 @@ export class PrismaAuthorsRepository implements AuthorsRepository {
   }
 
   async search(
-    data: SearchParamsInput<Author, 'name' | 'email' | 'createdAt'> = {},
+    data: SearchParamsInput = {},
   ): Promise<PaginationResult<Author>> {
     const { page = 1, perPage = 15, filter, sort, sortBy } = data;
 

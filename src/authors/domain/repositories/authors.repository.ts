@@ -9,8 +9,6 @@ export interface AuthorsRepository {
   findByEmail(email: string): Promise<Author | null>;
   update(id: string, data: Partial<Author>): Promise<Author>;
   delete(id: string): Promise<Author>;
-  search(
-    data: SearchParamsInput<Author, 'name' | 'email' | 'createdAt'>,
-  ): Promise<PaginationResult<Author>>;
+  search(data: SearchParamsInput): Promise<PaginationResult<Author>>;
   get(id: string): Promise<Author>;
 }

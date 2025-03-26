@@ -1,7 +1,7 @@
-export type SearchParamsInput<T, K extends keyof T> = {
+export type SearchParamsInput = {
   page?: number;
   perPage?: number;
   filter?: string;
-  sortBy?: K;
+  sortBy?: string;
   sort?: 'asc' | 'desc';
 };
