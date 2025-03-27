@@ -30,9 +30,16 @@ type Query {
 
 type Mutation {
   createAuthor(data: CreateAuthorInput!): Author!
+  updateAuthor(id: String!, data: UpdateAuthorInput!): Author!
+  deleteAuthor(id: String!): Author!
 }
 
 input CreateAuthorInput {
   name: String!
   email: String!
+}
+
+input UpdateAuthorInput {
+  name: String
+  email: String
 }

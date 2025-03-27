@@ -14,5 +14,3 @@ export class Author {
   @Field()
   createdAt: Date;
 }
-
-//@InputType() //parametros para criar um author
