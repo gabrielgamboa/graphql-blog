@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { execSync } from 'node:child_process';
 import { PrismaService } from '@/database/prisma/prisma.service';
 import { PrismaAuthorsRepository } from '@/authors/infra/prisma/prisma-authors.repository';
-import { AuthorDataBuilder } from '@/authors/helper/author-data-builder';
+import { AuthorDataBuilder } from '@/authors/helpers/author-data-builder';
 import { ListAuthorsUsecase } from './list-authors-usecase';
 import { Prisma } from '@prisma/client';
 

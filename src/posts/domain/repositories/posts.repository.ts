@@ -6,4 +6,5 @@ export interface PostsRepository {
   update(id: string, data: Partial<Post>): Promise<Post>;
   findById(id: string): Promise<Post>;
   findBySlug(slug: string): Promise<Post>;
+  get(id: string): Promise<Post>;
 }

@@ -6,7 +6,7 @@ import { GetAuthorUseCase } from './get-author-usecase';
 import { ResourceNotFoundError } from '@/shared/errors/resource-not-found-error';
 import { UpdateAuthorUseCase } from './update-author-usecase';
 import { BadRequestError } from '@/shared/errors/bad-request-error';
-import { AuthorDataBuilder } from '@/authors/helper/author-data-builder';
+import { AuthorDataBuilder } from '@/authors/helpers/author-data-builder';
 import { ResourceAlreadyExistsError } from '@/shared/errors/resource-already-exists-error';
 
 describe('GetAuthorUseCase Integration Tests', () => {

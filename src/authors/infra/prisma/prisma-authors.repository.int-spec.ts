@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { execSync } from 'node:child_process';
 import { PrismaAuthorsRepository } from './prisma-authors.repository';
 import { PrismaService } from '@/database/prisma/prisma.service';
-import { AuthorDataBuilder } from '@/authors/helper/author-data-builder';
+import { AuthorDataBuilder } from '@/authors/helpers/author-data-builder';
 import { Prisma } from '@prisma/client';
 import { ResourceNotFoundError } from '@/shared/errors/resource-not-found-error';
 
