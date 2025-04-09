@@ -4,6 +4,7 @@ import { PrismaService } from '@/database/prisma/prisma.service';
 import { execSync } from 'child_process';
 import { ResourceNotFoundError } from '@/shared/errors/resource-not-found-error';
 import { PostDataBuilder } from '@/posts/helpers/post-data-builder';
+import { AuthorDataBuilder } from '@/authors/helpers/author-data-builder';
 
 describe('PrismaPostsRepository Integration Tests', () => {
   let module: TestingModule;
@@ -35,10 +36,18 @@ describe('PrismaPostsRepository Integration Tests', () => {
     });
 
     it('shoud find a post', async () => {
+      const author = AuthorDataBuilder();
+      const authorCreated = await prisma.author.create({ data: author });
+
       const post = PostDataBuilder();
-      const postCreated = await repository.create(post);
-      expect(postCreated).toBeDefined();
-      expect(postCreated).toMatchObject(post);
+      const postCreated = await prisma.post.create({
+        data: { ...post, authorId: authorCreated.id },
+      });
+
+      const response = await repository.findById(postCreated.id);
+
+      expect(response).toBeDefined();
+      expect(postCreated).toMatchObject(response);
     });
   });
 });

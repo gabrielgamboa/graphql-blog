@@ -14,7 +14,10 @@ export class PrismaPostsRepository implements PostsRepository {
       data,
     });
 
-    return post;
+    return {
+      ...post,
+      publishedAt: post.publishedAt ?? undefined,
+    };
   }
 
   async update(id: string, data: Partial<Post>): Promise<Post> {

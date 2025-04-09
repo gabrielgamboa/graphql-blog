@@ -1,8 +1,8 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class Post {
-  @Field()
+  @Field(() => ID)
   id: string;
 
   @Field()
@@ -21,5 +21,5 @@ export class Post {
   createdAt: Date;
 
   @Field()
-  publishedAt?: Date;
+  publishedAt?: Date | null;
 }
