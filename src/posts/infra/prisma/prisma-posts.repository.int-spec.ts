@@ -49,5 +49,7 @@ describe('PrismaPostsRepository Integration Tests', () => {
       expect(response).toBeDefined();
       expect(postCreated).toMatchObject(response);
     });
+
+    //fazer demais testes de integração
   });
 });

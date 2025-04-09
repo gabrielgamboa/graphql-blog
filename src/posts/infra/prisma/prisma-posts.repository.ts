@@ -1,4 +1,3 @@
-import { CreatePost } from '@/posts/domain/dtos/create-post';
 import { PostsRepository } from '@/posts/domain/repositories/posts.repository';
 import { Post } from '../graphql/models/post';
 import { Injectable } from '@nestjs/common';
@@ -9,7 +8,7 @@ import { ResourceNotFoundError } from '@/shared/errors/resource-not-found-error'
 export class PrismaPostsRepository implements PostsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: CreatePost): Promise<Post> {
+  async create(data: Omit<Post, 'id' | 'createdAt'>): Promise<Post> {
     const post = await this.prisma.post.create({
       data,
     });
