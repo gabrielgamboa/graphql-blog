@@ -34,12 +34,10 @@ export class PrismaPostsRepository implements PostsRepository {
     return this.get(id);
   }
 
-  async findBySlug(slug: string): Promise<Post> {
+  async findBySlug(slug: string): Promise<Post | null> {
     const post = await this.prisma.post.findFirst({
       where: { slug: { contains: slug, mode: 'insensitive' } },
     });
-
-    if (!post) throw new ResourceNotFoundError();
 
     return post;
   }

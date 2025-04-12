@@ -1,9 +1,11 @@
+import slugify from 'slugify';
+
 import { BadRequestError } from '@/shared/errors/bad-request-error';
 import { ResourceAlreadyExistsError } from '@/shared/errors/resource-already-exists-error';
 import { Injectable, Inject } from '@nestjs/common';
 import { PostOutput } from '../dtos/post-output';
 import { PostsRepository } from '../repositories/posts.repository';
-import slugify from 'slugify';
+import { AuthorsRepository } from '@/authors/domain/repositories/authors.repository';
 
 export namespace CreatePostUseCase {
   export type Input = {
@@ -20,12 +22,12 @@ export namespace CreatePostUseCase {
       @Inject('PostsRepository')
       private readonly postsRepository: PostsRepository,
       @Inject('AuthorsRepository')
-      private readonly authorsRepository: PostsRepository,
+      private readonly authorsRepository: AuthorsRepository,
     ) {}
 
     async execute(data: Input): Promise<Output> {
       const { authorId, content, title } = data;
-      if (content || title) {
+      if (!content || !title) {
         throw new BadRequestError('Title or content not provided');
       }
       await this.authorsRepository.findById(authorId);

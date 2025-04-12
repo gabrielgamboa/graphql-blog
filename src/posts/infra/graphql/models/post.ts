@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, GraphQLISODateTime, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class Post {
@@ -20,6 +20,6 @@ export class Post {
   @Field()
   createdAt: Date;
 
-  @Field()
+  @Field(() => GraphQLISODateTime, { nullable: true })
   publishedAt?: Date | null;
 }
