@@ -8,7 +8,7 @@ import { ResourceNotFoundError } from '@/shared/errors/resource-not-found-error'
 export class PrismaPostsRepository implements PostsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: Omit<Post, 'id' | 'createdAt'>): Promise<Post> {
+  async create(data: Omit<Post, 'id' | 'createdAt' | 'author'>): Promise<Post> {
     const post = await this.prisma.post.create({
       data,
     });
@@ -19,7 +19,7 @@ export class PrismaPostsRepository implements PostsRepository {
     };
   }
 
-  async update(id: string, data: Partial<Post>): Promise<Post> {
+  async update(id: string, data: Omit<Partial<Post>, 'author'>): Promise<Post> {
     await this.get(id);
 
     const postUpdated = await this.prisma.post.update({

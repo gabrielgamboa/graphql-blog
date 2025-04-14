@@ -23,6 +23,6 @@ import { CreateAuthorUseCase } from './domain/usecases/create-author-usecase';
       useClass: PrismaAuthorsRepository,
     },
   ],
-  exports: [ProviderTokens.AuthorsRepository],
+  exports: [ProviderTokens.AuthorsRepository, GetAuthorUseCase.UseCase],
 })
 export class AuthorsModule {}
