@@ -18,7 +18,7 @@ export class Post {
   @Field()
   authorId: string;
 
-  @Field(() => Author)
+  @Field(() => Author, { nullable: true })
   author?: Author;
 
   @Field()

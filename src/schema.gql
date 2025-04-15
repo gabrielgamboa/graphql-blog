@@ -28,13 +28,20 @@ type Post {
   slug: String!
   content: String!
   authorId: String!
+  author: Author
   createdAt: DateTime!
   publishedAt: DateTime
 }
 
 type Query {
   hello: String!
-  authors(page: Int, perPage: Int, sortBy: String, sort: String, filter: String): SearchAuthorsResult!
+  authors(
+    page: Int
+    perPage: Int
+    sortBy: String
+    sort: String
+    filter: String
+  ): SearchAuthorsResult!
   getAuthorById(id: String!): Author!
 }
 
